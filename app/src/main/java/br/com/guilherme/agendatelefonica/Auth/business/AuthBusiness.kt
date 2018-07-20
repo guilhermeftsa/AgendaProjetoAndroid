@@ -7,14 +7,19 @@ import br.com.guilherme.agendatelefonica.Auth.network.AuthNetwork
 object AuthBusiness {
 
 
-//    fun logar(usuario: AuthUsuario, onSuccess: () -> Unit){
-//        AuthNetwork.logar(usuario, { user: AuthUsuario ->
-//            AuthDatabase.apagarBanco()
-//                AuthDatabase.cadastrarUsuario(usuario){
-//                        onSuccess()
-//                }
-//        })
-//    }
+    fun logar(email: String, password: String,  onSuccess: () -> Unit){
+        val usuario = AuthUsuario()
+
+        usuario.email = email
+        usuario.password = password
+        AuthDatabase.apagarBanco()
+        AuthNetwork.logar(usuario, { usuario ->
+
+                AuthDatabase.cadastrarUsuario(usuario){
+                        onSuccess()
+                }
+        })
+    }
 
     fun cadastrar(usuario: AuthUsuario, onSuccess: () -> Unit) {
 

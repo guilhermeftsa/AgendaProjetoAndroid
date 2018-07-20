@@ -13,6 +13,7 @@ open class AuthUsuario: RealmObject(){
     var passwordConfirmation: String? = null
 
     //Headers
+    @SerializedName("access-token")
     var accessToken: String? = null
     var uid: String? = null
     var client: String? = null

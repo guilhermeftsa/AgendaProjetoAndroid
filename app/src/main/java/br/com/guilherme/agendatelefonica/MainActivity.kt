@@ -18,7 +18,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Realm.init(this)
         cadastrar()
+        logar()
+    }
 
+    fun logar(){
+        botaoEntrar.setOnClickListener(){
+
+
+
+            AuthBusiness.logar(campoEmail.text.toString(), campoSenha.text.toString(), {
+                Log.d("TAG", "entrou")
+        })
+        }
     }
 
     fun cadastrar() {

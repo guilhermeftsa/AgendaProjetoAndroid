@@ -1,6 +1,5 @@
 package br.com.guilherme.agendatelefonica.Auth.network
 
-import android.util.Log
 import br.com.guilherme.agendatelefonica.Auth.module.AuthUsuario
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -22,20 +21,24 @@ object AuthNetwork {
                 .build()
     }
 
-    fun logar(usuario: AuthUsuario, onSuccess: (user: AuthUsuario) -> Unit) {
-
-        AuthAPI.logar(usuario)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ user ->
-
-                    user?.let {
-                        onSuccess(it)
-                    }
-
-                })
-
-    }
+//    fun logar(usuario: AuthUsuario, onSuccess: (user: AuthUsuario) -> Unit) {
+//
+//        AuthAPI.logar(usuario)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ user ->
+//
+//                    user?.let { response ->
+//                        response!!.body().let {
+//
+//                        }
+//
+//                        onSuccess(it)
+//                    }
+//
+//                })
+//
+//    }
 
     fun cadastrar(usuario: AuthUsuario, onSuccess: (user: AuthUsuario) -> Unit) {
 
@@ -49,10 +52,29 @@ object AuthNetwork {
                     }
 
                 },{
-                    Log.d("","")
+
                 })
 
     }
 
+    fun logar(usuario: AuthUsuario, onSuccess: (usuario: AuthUsuario) -> Unit){
 
-}
+        AuthAPI.logar(usuario)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ response ->
+
+                    response.body()!!.data?.let { usuario ->
+
+                        usuario?.uid = response.headers().get("uid")
+                        usuario?.client = response.headers().get("client")
+                        usuario?.accessToken = response.headers().get("access-token")
+
+                            onSuccess(usuario)
+
+                    }
+                })
+        }
+    }
+
+

@@ -11,7 +11,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "br.unifor.githubprofile"
+        applicationId "br.unifor.agendatelefonica"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
